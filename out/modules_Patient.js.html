@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: modules/Patient.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: modules/Patient.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Created by surajjha on 02/06/18.
+ */
+const _ = require('lodash');
+
+const db = require('../data/Database');
+
+/**
+ * @class Patient class contains all functionalities Patient details
+ * @requires lodash
+ * @requires Database
+ */
+class Patient {
+	/**
+	 * function returns a patient's prescriptions
+	 * @method Patient.getPrescriptions
+	 * @return {object} response standard api response
+	 */
+	getPrescriptions() {
+		try {
+			const { prescriptions } = db.get('users').find({ name: 'patient' }).value();
+			return { error: null, message: 'Prescriptions fetched successfully', result: prescriptions };
+		} catch (e) {
+			return { error: 'Error while fetching prescriptions', message: 'Could not get prescriptions', result: null };
+		}
+	}
+
+	/**
+	 * function creates a new prescription for the patient, based on the input given.
+	 * @param {object} data contains data fields for creating a new prescription for the patient
+	 * @method Patient.createPrescription
+	 * @return {object} response standard api response
+	 */
+	createPrescription(data) {
+		if (!data || !data.isApprovedForDoctor || !data.isApprovedForPharmacist || !data.period || !data.medicines || data.medicines.length &lt;= 0) {
+			return { error: 'input is incomplete', message: 'some or all required fields are missing', result: false };
+		}
+		const { prescriptions } = db.get('users').find({ name: 'patient' }).value();
+		const newPrescription = _.cloneDeep(data);
+		newPrescription.id = prescriptions.length + 1;
+		prescriptions.push(newPrescription);
+		try {
+			db.get('users').find({ name: 'patient' }).assign({ prescriptions }).value();
+		} catch (e) {
+			return { error: 'error in adding prescription', message: 'New prescription could not be created', result: false };
+		}
+		return { error: null, message: 'New prescription was created successfully', result: true };
+	}
+
+	/**
+	 * function asks for permission on behalf of either doctor or pharmacist.
+	 * @param {object} data contains data fields for requesting permission from the patient
+	 * to view a prescription
+	 * @method Patient.askForPermission
+	 * @return {object} response standard api response
+	 */
+	askForPermission(data) {
+		if (!data || !data.requestor || !data.id) {
+			return { error: 'input is missing', message: 'Either id or requestor field is missing', result: false };
+		}
+		const { prescriptions } = db.get('users').find({ name: 'patient' }).value();
+		const prescription = _.find(prescriptions, { id: data.id });
+		const index = _.findIndex(prescriptions, { id: data.id });
+		if (data.requestor === 'doctor' &amp;&amp; prescription.isApprovedForDoctor === 'no') {
+			prescription.isApprovedForDoctor = 'pending';
+		}
+		if (data.requestor === 'pharmacist' &amp;&amp; prescription.isApprovedForPharmacist === 'no') {
+			prescription.isApprovedForPharmacist = 'pending';
+		}
+		prescriptions.splice(index, 1, prescription);
+		try {
+			db.get('users').find({ name: 'patient' }).assign({ prescriptions }).value();
+		} catch (e) {
+			return { error: 'error in updating permission', message: 'prescription permission could not be updated', result: false };
+		}
+		return { error: null, message: 'prescription updated successfully', result: true };
+	}
+
+	/**
+	 * function approves a prescription on behalf of the patient. id field is used
+	 * @param {object} data contains data fields for approving a permission based in the given id
+	 * @method Patient.approvePrescription
+	 * @return {object} response standard api response
+	 */
+	approvePrescription(data) {
+		if (!data || !data.id) {
+			return { error: 'input is missing', message: 'Some or all fields are missing', result: false };
+		}
+		const { prescriptions } = db.get('users').find({ name: 'patient' }).value();
+		const prescription = _.find(prescriptions, { id: data.id });
+		const index = _.findIndex(prescriptions, { id: data.id });
+		if (data.approveForDoctor &amp;&amp; data.approveForDoctor === 'yes' &amp;&amp; prescription.isApprovedForDoctor === 'pending') {
+			prescription.isApprovedForDoctor = 'yes';
+		} else if (data.approveForPharmacist &amp;&amp; data.approveForPharmacist === 'yes' &amp;&amp; prescription.isApprovedForPharmacist === 'pending') {
+			prescription.isApprovedForPharmacist = 'yes';
+		}
+		prescriptions.splice(index, 1, prescription);
+		try {
+			db.get('users').find({ name: 'patient' }).assign({ prescriptions }).value();
+		} catch (e) {
+			return { error: 'error in approving prescription', message: 'prescription could not be approved. database failure', result: false };
+		}
+		return { error: null, message: 'prescription approved successfully', result: true };
+	}
+}
+
+module.exports = Patient;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-Database.html">Database</a></li></ul><h3>Classes</h3><ul><li><a href="Patient.html">Patient</a></li><li><a href="UserAuthentication.html">UserAuthentication</a></li></ul><h3>Global</h3><ul><li><a href="global.html#_">_</a></li><li><a href="global.html#express">express</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jun 03 2018 14:11:17 GMT+0530 (IST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

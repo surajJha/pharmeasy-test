@@ -1,0 +1,102 @@
+{
+  "name": "pharmeasy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/server/app.js",
+    "start:dev": "nodemon --exec npm run build:dev",
+    "build": "webpack --config ./config/webpack.config.js",
+    "build:dev": "webpack --config ./config/webpack.config.js && node ./src/server/app.js",
+    "test": "jest --forceExit",
+    "docs": "jsdoc ./src/server/*"
+  },
+  "babel": {
+    "presets": [
+      [
+        "es2016"
+      ],
+      "react"
+    ],
+    "plugins": [
+      "babel-plugin-transform-class-properties"
+    ]
+  },
+  "keywords": [
+    "react",
+    "express",
+    "node",
+    "webpack"
+  ],
+  "author": "suraj jha",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.17.1",
+    "chalk": "^2.1.0",
+    "classnames": "^2.2.5",
+    "cross-fetch": "^2.2.0",
+    "express": "^4.15.2",
+    "immutable": "^3.8.2",
+    "lodash": "^4.17.10",
+    "lowdb": "^1.0.0",
+    "morgan": "^1.8.1",
+    "react": "^16.3.2",
+    "react-bootstrap": "^0.32.1",
+    "react-dom": "^16.3.2",
+    "react-redux": "^5.0.4",
+    "react-router-dom": "^4.1.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^8.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.28.0",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.1.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-react": "^7.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-watch": "^3.1.2",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^22.4.3",
+    "jest-junit": "^3.7.0",
+    "jsdoc": "^3.5.5",
+    "node-sass": "^4.5.2",
+    "nodemon": "^1.11.0",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.3"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "projects": [
+      "<rootDir>/src/client/jest.json",
+      "<rootDir>/src/server/jest.json"
+    ]
+  },
+  "nodemonConfig": {
+    "ext": "js, jsx, scss, css, json",
+    "ignore": [
+      "./www",
+      "*.test.js"
+    ]
+  }
+}

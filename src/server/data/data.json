@@ -1,0 +1,107 @@
+{
+  "users": [
+    { "id": 1,
+      "name": "patient",
+      "password": "patient",
+      "prescriptions": [
+        {
+          "id": 1,
+          "isApprovedForDoctor": "yes",
+          "isApprovedForPharmacist": "yes",
+          "period": "March 2018 - June 2018",
+          "medicines": [
+            {
+              "name": "Paracetamol",
+              "qty": "500 mg",
+              "dosage": "twice a day"
+            },
+            {
+              "name": "Amoxilin",
+              "qty": "50 mg",
+              "dosage": "Once a day"
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "isApprovedForDoctor": "yes",
+          "isApprovedForPharmacist": "yes",
+          "period": "Jan 2018 - Feb 2018",
+          "medicines": [
+            {
+              "name": "ranitidine",
+              "qty": "500 mg",
+              "dosage": "Thrice a day"
+            },
+            {
+              "name": "Combiflam",
+              "qty": "100 mg",
+              "dosage": "Twice a day"
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "isApprovedForDoctor": "no",
+          "isApprovedForPharmacist": "no",
+          "period": "Aug 2018 - Oct 2018",
+          "medicines": [
+            {
+              "name": "Metoprolol",
+              "qty": "500 mg",
+              "dosage": "Once a day"
+            },
+            {
+              "name": "Nebivolol",
+              "qty": "10 mg",
+              "dosage": "Once a Week"
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "isApprovedForDoctor": "no",
+          "isApprovedForPharmacist": "no",
+          "period": "Nov 2018 - Dec 2018",
+          "medicines": [
+            {
+              "name": "Warfafin",
+              "qty": "25 mg",
+              "dosage": "Once a day"
+            },
+            {
+              "name": "Acebutolol",
+              "qty": "10 mg",
+              "dosage": "Once a day"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "isApprovedForDoctor": "yes",
+          "isApprovedForPharmacist": "yes",
+          "period": "Feb 2017 - Sep 2017",
+          "medicines": [
+            {
+              "name": "PCM",
+              "qty": "25 mg",
+              "dosage": "Once a day"
+            },
+            {
+              "name": "Colpol",
+              "qty": "10 mg",
+              "dosage": "Once a day"
+            }
+          ]
+        }
+      ]
+    },
+    { "id": 1,
+      "name": "doctor",
+      "password": "doctor"
+    },
+    { "id": 1,
+      "name":"pharmacist",
+      "password": "pharmacist"
+    }]
+}

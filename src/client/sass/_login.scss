@@ -1,0 +1,30 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  margin-top: 100px;
+  justify-content: center;
+
+  &__container {
+    border: 10px solid #f44336;
+    padding: 20px;
+  }
+
+  &__btn {
+    background-color: #f44336;
+    border-color: #f44336;
+    color: white;
+  }
+}
+
+.logout {
+  position: absolute;
+  right: 20px;
+  font-size: 15px;
+}
+
+.create {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 16px;
+}
