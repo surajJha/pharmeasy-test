@@ -18,6 +18,13 @@ The front-end has a very simple UI and concentration has been given to the _back
 
 3. **Pharmacist**
     ``Pharmacist can view the prescriptions which has been granted access by the patient and can request for access to those prescriptions for which he doesn't have access yet``
+ 
+## App Structure
+    This is a standard express backend and react front-end web app.
+    backend code is present in src/server
+    front-end code is present in src/client
+    unit tests are present in src/server/modules/__tests__
+    (tests are currently written only for backend code)
     
     
 ## Running the app in development mode
